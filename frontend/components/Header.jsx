@@ -1,11 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import TodoTextInput from './TodoTextInput';
-
+import SelectField from 'material-ui/SelectField';
 import AppBar from 'material-ui/AppBar';
+import MenuItem from 'material-ui/MenuItem';
 
-const defaultStyle = {
-  marginLeft: 20
-};
 
 class Header extends Component {
   handleSave(text) {
@@ -13,15 +11,26 @@ class Header extends Component {
       this.props.addTodo(text);
     }
   }
+  state = {
+    value: 1,
+  };
+
+  handleChange = (event, index, value) => this.setState({value});
 
   render() {
     return (
       <header className="header">
-          <AppBar title="Skos" />
-          <h1 style={defaultStyle} >Todo List</h1>
-          <TodoTextInput newTodo
-                         onSave={this.handleSave.bind(this)}
-                         placeholder="What needs to be done?" />
+          
+          <h1>Генератор документов</h1>
+          <SelectField
+                    floatingLabelText="Document type"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  >
+            <MenuItem value={1} primaryText="Договор подряда" />
+            <MenuItem value={2} primaryText="Отчет о команидровке" />
+            <MenuItem value={3} primaryText="Запрос визиток" />
+          </SelectField>
       </header>
     );
   }
